@@ -2,7 +2,7 @@
 
 A quiet, anonymous correspondence app. Write up to 800 characters, release a bottle, and let it drift for a randomly selected 6–72 hours. Bottles find one other active person, who can reply, keep, release again, or discard.
 
-Built with **Next.js 15 App Router, TypeScript, Tailwind CSS 4, shadcn/ui primitives, Supabase Postgres/Auth/Realtime, and Vercel Cron**. No application integration uses another service.
+Built with **Next.js 15 App Router, TypeScript, Tailwind CSS 4, shadcn/ui primitives, Supabase Postgres/Auth/Realtime, and Vercel hosting**. Scheduled delivery uses Supabase Cron on Vercel Hobby, an explicitly approved exception to the original Vercel Cron requirement. No application integration uses another service.
 
 ## Try the interface locally
 
@@ -103,9 +103,11 @@ Save the resulting TypeScript to `types/database.generated.ts` and run `npm run 
 
 ## Delivery cron
 
-`vercel.json` schedules `GET /api/cron/deliver` every **30 minutes** (`*/30 * * * *`). Vercel adds `Authorization: Bearer <CRON_SECRET>` automatically. The route uses a timing-safe comparison, returns no message content, and calls the atomic service-role `deliver_due_bottles` RPC. Unauthorized callers receive 401; missing configuration receives 503. Overlapping runs either process atomically or return `busy: true`. Failed transactions roll back; the next run retries safely.
+The current deployment uses **Supabase Cron every 30 minutes** (`*/30 * * * *`). Review and run `supabase/setup/delivery-cron.sql` as the database administrator after the initial migration. It enables `pg_cron` and schedules `SELECT public.deliver_due_bottles(100);` directly inside Postgres; no HTTP token or extra service is needed. The setup is repeatable but refuses to overwrite a same-named job with different settings. Verify the active job and successful runs in **Integrations > Cron**. `vercel.json` intentionally has no cron entry so Hobby deployments succeed.
 
-**Vercel Pro is required** for the requested frequency. [Hobby cron jobs run at most once per day](https://vercel.com/docs/cron-jobs/usage-and-pricing), which does not meet this MVP's schedule. Cron runs on production deployments, not on an ordinary local dev server.
+The protected `GET /api/cron/deliver` route remains available for reviewed manual/staging runs. It uses a timing-safe comparison against `CRON_SECRET`, returns no message content, and calls the atomic service-role `deliver_due_bottles` RPC. Unauthorized callers receive 401; missing configuration receives 503. Overlapping runs either process atomically or return `busy: true`. Failed transactions roll back; the next run retries safely.
+
+To use the original Vercel Cron option instead, **Vercel Pro is required**: [Hobby cron jobs run at most once per day](https://vercel.com/docs/cron-jobs/usage-and-pricing). Restore `{"crons":[{"path":"/api/cron/deliver","schedule":"*/30 * * * *"}]}` in `vercel.json` and deploy with `CRON_SECRET` set. Vercel sends the secret as a Bearer token automatically. Do not enable both schedulers unnecessarily; changing an existing production job requires separate review.
 
 To trigger a development/staging run without putting the secret in terminal arguments:
 
@@ -118,11 +120,11 @@ This is a database write: the script sends an authenticated GET to `/api/cron/de
 
 ## Vercel deployment
 
-1. Store this directory in your own Git repository and import it into Vercel as a Next.js project (set the root directory if using a monorepo). No deployment has been created automatically.
+1. Store this directory in your own Git repository and import it into Vercel as a Next.js project (set the root directory if using a monorepo).
 2. Select **Node.js 22 or newer**. Install with `npm ci`; build with `npm run build`. The lockfile pins patched dependencies while keeping Next.js 15. Server-only keys are isolated using `server-only` imports.
 3. Add the environment variables, with separate values/projects for Preview and Production. Set `NEXT_PUBLIC_APP_URL` to the production origin before building. Keep `CRON_SECRET` at least 32 random characters. Never expose the service-role key in public variables.
 4. Apply the reviewed initial migration to the new Supabase project. Configure Auth URLs, templates, anonymous sign-in, identity linking, and Realtime as above.
-5. Deploy on a Vercel plan that supports the cron interval. Verify the job in Vercel's cron dashboard.
+5. On Hobby, apply the separately reviewed Supabase cron setup and verify its job/history. For the optional Pro configuration, verify the job in Vercel's cron dashboard instead.
 6. In staging, use two distinct sessions/accounts. Release a message, confirm cooldown enforcement, wait for eligibility, then verify delivery, delayed reply, keep/re-release/discard, collection deletion confirmation, and cross-account denial. Check guest upgrade preserves its collection. Verify public email readiness separately if an SMTP exception is authorized.
 
 ## Verification
