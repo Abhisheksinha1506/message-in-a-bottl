@@ -1,7 +1,8 @@
 import { NextResponse, type NextRequest } from "next/server";
 import { serverClient } from "@/lib/supabase/server";
+import { authRedirectOrigin } from "@/lib/app-origin";
 export async function GET(request: NextRequest) {
-  const origin = process.env.NEXT_PUBLIC_APP_URL || request.nextUrl.origin;
+  const origin = authRedirectOrigin(request.nextUrl.origin);
   try {
     const client = await serverClient();
     const code = request.nextUrl.searchParams.get("code");

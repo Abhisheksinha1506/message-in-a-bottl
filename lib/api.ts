@@ -3,6 +3,7 @@ import { NextResponse, type NextRequest } from "next/server";
 import { ZodError } from "zod";
 import { serverClient } from "@/lib/supabase/server";
 import { hasSupabase } from "@/lib/config";
+import { trustedAppOrigins } from "@/lib/app-origin";
 export class ApiError extends Error {
   constructor(
     message: string,
@@ -14,10 +15,7 @@ export class ApiError extends Error {
 export async function mutationClient(request: NextRequest) {
   if (!hasSupabase) throw new ApiError("The shore is not configured yet.", 503);
   const origin = request.headers.get("origin");
-  const expected = process.env.NEXT_PUBLIC_APP_URL
-    ? new URL(process.env.NEXT_PUBLIC_APP_URL).origin
-    : request.nextUrl.origin;
-  if (!origin || origin !== expected)
+  if (!origin || !trustedAppOrigins(request.nextUrl.origin).has(origin))
     throw new ApiError("Please send this request from your shore.", 403);
   if (Number(request.headers.get("content-length") ?? 0) > 16384)
     throw new ApiError("This message is too large.", 413);

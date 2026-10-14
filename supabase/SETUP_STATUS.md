@@ -26,18 +26,19 @@ Anonymous sign-ins and manual identity linking were enabled after the user's con
 
 ## Callback URLs: saved and verified
 
-The production Site URL is `https://message-in-a-bottle-two.vercel.app`. The exact production callback was added through the Management API using the existing authenticated CLI session, and verified by a fresh configuration read. Local callbacks were preserved:
+The primary production Site URL is `https://slow-correspondence.vercel.app`. The exact callback was configured through the Management API using the existing authenticated CLI session. The original production callback and local callbacks are preserved:
 
 - `http://localhost:3000/auth/callback`
 - `http://127.0.0.1:3000/auth/callback`
 - `http://127.0.0.1:3002/auth/callback`
 - `https://message-in-a-bottle-two.vercel.app/auth/callback`
+- `https://slow-correspondence.vercel.app/auth/callback`
 
 ## Vercel: connected and redeployed
 
-The live application is [message-in-a-bottle-two.vercel.app](https://message-in-a-bottle-two.vercel.app).
+The primary live address is [slow-correspondence.vercel.app](https://slow-correspondence.vercel.app). The original domain remains connected to Production and is an exact server-side allowed alias, preserving existing host-bound guest sessions. No domain was deleted or purchased.
 
-All six environment variables are configured for Production. The existing publishable key is stored under `NEXT_PUBLIC_SUPABASE_ANON_KEY`; the existing backend secret key is stored under the server-only `SUPABASE_SERVICE_ROLE_KEY`. The backend key and randomly generated `CRON_SECRET` are non-revealable Vercel Secrets. No credentials were committed to GitHub or printed in chat. A fresh production deployment completed with status Ready after these variables were saved.
+All seven environment variables, including the server-only `APP_ALLOWED_ORIGINS` legacy alias, are configured for Production. The existing publishable key is stored under `NEXT_PUBLIC_SUPABASE_ANON_KEY`; the existing backend secret key is stored under the server-only `SUPABASE_SERVICE_ROLE_KEY`. The backend key and randomly generated `CRON_SECRET` are non-revealable Vercel Secrets. No credentials were committed to GitHub or printed in chat. A fresh production deployment completed with status Ready after the Supabase variables were saved.
 
 ## Delivery: Supabase scheduler
 

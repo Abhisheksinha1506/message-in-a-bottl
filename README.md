@@ -25,10 +25,13 @@ Create `.env.local` using `.env.example` as a reference. Do not commit it or pas
 | `NEXT_PUBLIC_SUPABASE_ANON_KEY` | Public      | Supabase publishable key or legacy anon key; RLS protects data                                                          |
 | `SUPABASE_SERVICE_ROLE_KEY`     | Server only | Supabase secret key or legacy service-role key for delivery RPC; never prefix with `NEXT_PUBLIC_`                       |
 | `NEXT_PUBLIC_APP_URL`           | Public      | Exact application origin, e.g. `http://localhost:3000` or the production Vercel domain; also validates mutation origins |
+| `APP_ALLOWED_ORIGINS`           | Server only | Optional comma-separated exact owned aliases; preserves existing sessions during domain changes (no wildcards)        |
 | `CRON_SECRET`                   | Server only | Random secret of at least 32 characters; Vercel sends it as a Bearer token                                              |
 | `NEXT_PUBLIC_DEMO_MODE`         | Local only  | `false` opts out of the sample preview                                                                                  |
 
 Use your secret manager or Vercel's environment editor to create/store the cron secret. If you run on a different local port, update `NEXT_PUBLIC_APP_URL` and Supabase's allowed redirect URLs accordingly. Restart/rebuild after changing public variables. Configure a distinct Supabase project for preview deployments; `NEXT_PUBLIC_APP_URL` must match that preview's exact origin.
+
+The primary production address is [slow-correspondence.vercel.app](https://slow-correspondence.vercel.app). The original `message-in-a-bottle-two.vercel.app` remains an explicitly allowed alias so existing guest sessions keep working. Cookies are host-bound: use the original address to access an existing guest collection; opening the new address does not transfer a guest session. Auth callbacks stay on their approved incoming host.
 
 ## Create the Supabase project
 
