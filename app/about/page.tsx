@@ -20,6 +20,23 @@ export default function AboutPage() {
           feeds to refresh, no followers to collect, and no audience to perform
           for.
         </p>
+        <div className="context-steps" aria-label="A bottle’s journey">
+          <div>
+            <span>01 · Write</span>
+            <p>A thought, a story, or a question. Up to 800 characters.</p>
+          </div>
+          <div>
+            <span>02 · Drift</span>
+            <p>A random 6–72-hour pause. No rush, and no delivery guarantee.</p>
+          </div>
+          <div>
+            <span>03 · Connect</span>
+            <p>
+              One active stranger receives it. A reply takes its own slow
+              journey.
+            </p>
+          </div>
+        </div>
         <h2>How the current works</h2>
         <p>
           A new bottle travels for a random 6–72 hours before finding another
@@ -49,15 +66,85 @@ export default function AboutPage() {
           remain with their recipients. Discarded bottles leave your inbox but
           remain stored.
         </p>
+        <p>
+          <Link href="/privacy" className="text-link">
+            Read the full privacy policy: emails, cookies, storage, and deletion
+            →
+          </Link>
+        </p>
+        <h2>Email is optional. Context is not.</h2>
+        <p>
+          Guest mode creates a real account without asking for an email. Your
+          bottles are still stored on the server. Email sign-in or a verified
+          guest upgrade can help you return to the same account; Supabase Auth
+          stores that address, and it is not shared with recipients.
+        </p>
+        <p>
+          Public magic-link email delivery is not yet enabled in this early
+          version. Use guest mode if you cannot receive an invitation. Until you
+          have verified an email, keep the same browser session and website
+          address to return to your shore.
+        </p>
         <h2>A place to take your time</h2>
         <p>
           There are no read receipts, scores, or promises of a quick reply.
           Guest sessions can be upgraded with an email. Without an upgrade,
           losing your session may mean losing access to your shore.
         </p>
+        <h2>A few things worth knowing</h2>
+        <div className="context-faq">
+          <details>
+            <summary>What happens when I reply?</summary>
+            <p>
+              Your reply becomes a separate bottle, addressed to the previous
+              holder after a new random delay. This is not a live chat, and
+              neither person owes the other a reply.
+            </p>
+          </details>
+          <details>
+            <summary>Can a bottle visit more than one person?</summary>
+            <p>
+              Yes, one holder at a time. Release a received bottle again to send
+              it to another eligible stranger. Its onward notes may travel with
+              it, so keep them as anonymous as the original message.
+            </p>
+          </details>
+          <details>
+            <summary>Why might a bottle take longer than 72 hours?</summary>
+            <p>
+              The initial wait is 6–72 hours. Delivery also needs an eligible
+              person who was active in the last 14 days and has room on their
+              shore. Without one, the bottle waits and is retried. The maximum
+              initial delay is not a guaranteed arrival time.
+            </p>
+          </details>
+          <details>
+            <summary>
+              What is the difference between discard and delete?
+            </summary>
+            <p>
+              Discard hides the bottle from your inbox but does not erase its
+              stored content. You can permanently delete a bottle you currently
+              keep in Keepsakes. That does not remove your account or
+              independent replies already created.{" "}
+              <Link href="/privacy#retention">Read the retention details.</Link>
+            </p>
+          </details>
+          <details>
+            <summary>Is this a confidential or emergency service?</summary>
+            <p>
+              No. Messages are not end-to-end encrypted, and a recipient may
+              share their contents elsewhere. Do not put private identifiers,
+              passwords, financial or medical details in a bottle. This app is
+              not a place to seek urgent or emergency help.
+            </p>
+          </details>
+        </div>
       </div>
-      <footer className="mt-16 border-t border-border pt-6 text-xs text-[#6a7d74]">
-        With kindness, from one shore to another.
+      <footer className="info-footer">
+        <span>With kindness, from one shore to another.</span>
+        <Link href="/privacy">Privacy policy</Link>
+        <Link href="/login">Visit the shore →</Link>
       </footer>
     </main>
   );

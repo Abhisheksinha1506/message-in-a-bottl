@@ -6,6 +6,7 @@ import { toast } from "sonner";
 import { browserClient } from "@/lib/supabase/client";
 import { Button } from "@/components/ui/button";
 import { BottleIllustration } from "@/components/bottle-illustration";
+import { EmailPrivacyNote } from "@/components/email-privacy-note";
 export function LoginForm({ configured }: { configured: boolean }) {
   const [email, setEmail] = useState("");
   const [busy, setBusy] = useState(false);
@@ -95,6 +96,7 @@ export function LoginForm({ configured }: { configured: boolean }) {
                 autoComplete="email"
                 required
                 maxLength={254}
+                aria-describedby="login-email-privacy"
                 placeholder="Your email address"
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
@@ -120,10 +122,12 @@ export function LoginForm({ configured }: { configured: boolean }) {
             <p className="mt-5 text-xs leading-6 text-[#6a7d74]">
               No passwords. No public profiles. Just a place to be.
               <br />
-              Guests can add an email later to save their collection.
+              Guests can add and verify an email when email delivery is
+              available.
             </p>
           </>
         )}
+        <EmailPrivacyNote id="login-email-privacy" />
         <a
           href="/about"
           className="mt-8 inline-block text-xs underline underline-offset-4"

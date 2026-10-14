@@ -814,6 +814,235 @@ textarea.field {
 .about-prose p {
   margin: 14px 0;
 }
+.info-page {
+  max-width: 900px;
+  margin: 0 auto;
+  padding: 42px 28px 60px;
+}
+.info-nav,
+.info-footer,
+.footer-links {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 14px 24px;
+}
+.info-nav {
+  justify-content: space-between;
+  color: #426e65;
+  font-size: 13px;
+}
+.info-heading {
+  margin: 60px 0 34px;
+  color: #35584f;
+}
+.info-heading .eyebrow {
+  margin-top: 22px;
+}
+.info-heading h1 {
+  font-family: Georgia, serif;
+  font-size: clamp(36px, 6vw, 54px);
+  line-height: 1.15;
+  letter-spacing: -1.6px;
+  margin: 16px 0 20px;
+}
+.info-lead {
+  font-size: 16px;
+  color: #5c7268;
+}
+.info-updated {
+  margin-top: 14px;
+  font-size: 12px;
+  color: #64746a;
+}
+.privacy-summary {
+  padding: 26px;
+  border: 1px solid #dce4d8;
+  border-radius: 14px;
+  background: #edf1e8;
+}
+.privacy-summary h2 {
+  font-family: Georgia, serif;
+  font-size: 23px;
+}
+.privacy-facts,
+.context-steps {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 24px;
+  margin-top: 22px;
+}
+.privacy-facts h3 {
+  font-size: 13px;
+  font-weight: 600;
+  margin: 12px 0 7px;
+}
+.privacy-facts p {
+  color: #52685d;
+  font-size: 13px;
+  line-height: 1.75;
+}
+.policy-contents {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 12px 28px;
+  padding: 28px 0;
+  margin: 20px 0 8px;
+  border-bottom: 1px solid #dce4d8;
+  color: #426e65;
+  font-size: 12px;
+}
+.policy-contents a {
+  display: flex;
+  align-items: baseline;
+  gap: 10px;
+}
+.policy-contents span {
+  color: #68786d;
+  font-size: 10px;
+}
+.policy-contents a:hover,
+.info-nav a:hover {
+  text-decoration: underline;
+  text-underline-offset: 4px;
+}
+.policy-prose {
+  max-width: 760px;
+  font-size: 14px;
+  line-height: 1.9;
+  color: #52665c;
+}
+.policy-prose section {
+  scroll-margin-top: 30px;
+  margin-top: 36px;
+}
+.policy-prose h2 {
+  font-family: Georgia, serif;
+  font-size: 25px;
+  color: #35584f;
+  line-height: 1.4;
+}
+.policy-prose p {
+  margin: 14px 0;
+  overflow-wrap: anywhere;
+}
+.policy-prose a,
+.text-link,
+.context-faq a,
+.email-privacy-note a,
+.compose-privacy a,
+.privacy-settings a {
+  color: #355e52;
+  text-decoration: underline;
+  text-underline-offset: 4px;
+}
+.policy-notice {
+  padding: 4px 20px;
+  border-left: 3px solid #9cb39e;
+  background: #eff2ea;
+  border-radius: 0 8px 8px 0;
+}
+.info-footer {
+  border-top: 1px solid #dce4d8;
+  margin-top: 48px;
+  padding-top: 24px;
+  color: #5f7469;
+  font-size: 12px;
+}
+.info-footer > span {
+  flex: 1 1 240px;
+}
+.info-footer a,
+.footer-links a {
+  text-decoration: underline;
+  text-underline-offset: 4px;
+}
+.footer-links {
+  font-size: 11px;
+  gap: 12px 20px;
+}
+.footer-links a {
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+}
+.email-privacy-note {
+  color: #5c7065;
+  font-size: 12px;
+  line-height: 1.8;
+  margin-top: 20px;
+}
+.privacy-settings {
+  margin-top: 24px;
+}
+.compose-privacy {
+  margin-top: 16px;
+  color: #5c7065;
+  font-size: 11px;
+  line-height: 1.8;
+}
+.context-steps {
+  gap: 12px;
+  margin: 28px 0;
+}
+.context-steps > div {
+  padding: 16px;
+  border-radius: 10px;
+  background: #edf1e8;
+}
+.context-steps span {
+  font-size: 12px;
+  font-weight: 600;
+  color: #355e52;
+}
+.context-steps p {
+  font-size: 12px;
+  line-height: 1.7;
+  margin-bottom: 0;
+}
+.context-faq details {
+  padding: 17px 0;
+  border-top: 1px solid #dce4d8;
+}
+.context-faq summary {
+  cursor: pointer;
+  font-size: 14px;
+  font-weight: 600;
+  color: #355e52;
+}
+.context-faq summary:focus-visible {
+  outline: 2px solid #426e65;
+  outline-offset: 4px;
+}
+.context-faq details p {
+  margin-bottom: 0;
+}
+@media (max-width: 600px) {
+  .info-page {
+    padding: 28px 20px 40px;
+  }
+  .info-heading {
+    margin-top: 44px;
+  }
+  .privacy-summary {
+    padding: 22px;
+  }
+  .privacy-facts,
+  .context-steps {
+    grid-template-columns: 1fr;
+    gap: 18px;
+  }
+  .privacy-facts > div + div {
+    border-top: 1px solid #dce4d8;
+    padding-top: 18px;
+  }
+  .policy-contents {
+    grid-template-columns: 1fr;
+  }
+  .policy-prose h2 {
+    font-size: 23px;
+  }
+}
 .loading-shore {
   max-width: 1000px;
   margin: 60px auto;

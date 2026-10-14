@@ -100,9 +100,14 @@ export function Compose({
             maxLength={1600}
             placeholder={"Dear stranger,\n\nToday, I was thinking about…"}
             className="compose-text"
-            aria-describedby="word-count compose-hint"
+            aria-describedby="word-count compose-hint compose-privacy"
             required
           />
+          <p id="compose-privacy" className="compose-privacy">
+            Anonymous to the recipient, not end-to-end encrypted. Leave
+            identifying details out of your bottle.{" "}
+            <Link href="/privacy#visibility">Who can see your words?</Link>
+          </p>
           <div className="compose-count">
             <span>With kindness, a stranger</span>
             <span id="word-count" className={count > 800 ? "text-red-700" : ""}>

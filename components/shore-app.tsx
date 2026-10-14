@@ -12,6 +12,7 @@ import {
   Loader2,
   MessageCircle,
   Settings,
+  ShieldCheck,
   Shell,
   Trash2,
   Waves,
@@ -270,6 +271,10 @@ export function ShoreApp({
             <Info size={17} />
             About this little ocean
           </Link>
+          <Link href="/privacy" className="nav-item">
+            <ShieldCheck size={17} />
+            Privacy and your words
+          </Link>
           <Link
             href="/settings"
             aria-current={view === "settings" ? "page" : undefined}
@@ -495,9 +500,12 @@ export function ShoreApp({
               <Waves size={15} /> No feeds. No followers. Just a little
               connection.
             </span>
-            <Link href="/about">
-              Made for taking your time <ArrowRight size={12} />
-            </Link>
+            <nav aria-label="About and privacy" className="footer-links">
+              <Link href="/about">
+                How it works <ArrowRight size={12} />
+              </Link>
+              <Link href="/privacy">Privacy policy</Link>
+            </nav>
           </footer>
         </main>
       </div>

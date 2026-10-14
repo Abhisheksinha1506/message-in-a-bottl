@@ -8,6 +8,8 @@ import { browserClient } from "@/lib/supabase/client";
 import { profileSchema } from "@/lib/moderation";
 import { request, readableError } from "@/lib/client-api";
 import type { ShoreData } from "@/types/bottle";
+import Link from "next/link";
+import { EmailPrivacyNote } from "@/components/email-privacy-note";
 export function SettingsView({
   data,
   onSave,
@@ -141,6 +143,7 @@ export function SettingsView({
                 id="upgrade-email"
                 type="email"
                 autoComplete="email"
+                aria-describedby="upgrade-email-privacy"
                 required
                 className="field"
                 value={email}
@@ -149,6 +152,7 @@ export function SettingsView({
               <Button disabled={busy}>Send an invitation</Button>
             </form>
           )}
+          <EmailPrivacyNote id="upgrade-email-privacy" />
           {data.demo && (
             <div className="mt-5 rounded-lg bg-muted p-4 text-xs leading-6">
               This is a browser preview. Email sign-in and upgrades become
@@ -185,6 +189,24 @@ export function SettingsView({
           )}
         </div>
       </div>
+      <section
+        className="settings-card privacy-settings"
+        aria-labelledby="privacy-settings-title"
+      >
+        <h2 id="privacy-settings-title">What stays, and what leaves.</h2>
+        <p>
+          Discard hides a bottle but keeps its stored content. Permanent
+          deletion is available for bottles you currently keep; it does not
+          delete your account or independent replies. Signing out does not erase
+          server-side data.
+        </p>
+        <p>
+          Full-account deletion and export are not self-service in this version.{" "}
+          <Link href="/privacy#retention">
+            Read about storage and deletion →
+          </Link>
+        </p>
+      </section>
     </>
   );
 }

@@ -26,6 +26,7 @@ Create `.env.local` using `.env.example` as a reference. Do not commit it or pas
 | `SUPABASE_SERVICE_ROLE_KEY`     | Server only | Supabase secret key or legacy service-role key for delivery RPC; never prefix with `NEXT_PUBLIC_`                       |
 | `NEXT_PUBLIC_APP_URL`           | Public      | Exact application origin, e.g. `http://localhost:3000` or the production Vercel domain; also validates mutation origins |
 | `APP_ALLOWED_ORIGINS`           | Server only | Optional comma-separated exact owned aliases; preserves existing sessions during domain changes (no wildcards)        |
+| `PRIVACY_CONTACT_EMAIL`         | Public text | Optional monitored privacy-request address rendered on `/privacy`; not an SMTP credential                            |
 | `CRON_SECRET`                   | Server only | Random secret of at least 32 characters; Vercel sends it as a Bearer token                                              |
 | `NEXT_PUBLIC_DEMO_MODE`         | Local only  | `false` opts out of the sample preview                                                                                  |
 
@@ -67,6 +68,10 @@ supabase migration up --local
 Review the local migration and apply it to the **local** stack using the CLI migration workflow. Populate `.env.local` from local credentials without sharing or logging them. Development email is captured by Supabase's local mail viewer. Do not run database reset or container deletion commands on existing environments. To enable identity linking locally, set `enable_manual_linking = true` in `[auth]` as included in the configuration.
 
 ## Database design and privacy
+
+The public `/privacy` policy explains email storage in Supabase Auth, server-side guest data, recipient versus operator anonymity, essential cookies, providers, and the exact limits of discard/permanent deletion. `/about` includes the journey and a plain-language FAQ. Privacy links are available before sign-in and in settings, compose, navigation, and the app footer.
+
+Set `PRIVACY_CONTACT_EMAIL` to a public, monitored address and redeploy to publish a private request channel. Until configured, the page explicitly says there is no published privacy contact; it does not invent one or promise account deletion/export. Before a wider launch, the operator should confirm their identity/contact details, establish a real retention and account-data-request process, and obtain jurisdiction-appropriate legal review. This implementation describes current behavior; it is not a claim of legal compliance. Update `lib/privacy.ts` whenever providers, email delivery, analytics, or retention change.
 
 All five public tables have RLS: `profiles`, `messages`, `message_replies`, `message_history`, and `inbox_events`. App users have no direct table write privileges. They call narrowly granted, fixed-search-path `SECURITY DEFINER` functions that independently verify `auth.uid()` and ownership. Service role alone can invoke delivery. Public function execution defaults are revoked explicitly.
 
