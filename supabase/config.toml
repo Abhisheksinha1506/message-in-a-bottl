@@ -1,0 +1,32 @@
+project_id = "message-in-a-bottle"
+[api]
+enabled = true
+port = 54321
+schemas = ["public", "graphql_public"]
+extra_search_path = ["public", "extensions"]
+max_rows = 1000
+[db]
+port = 54322
+shadow_port = 54320
+major_version = 17
+[studio]
+enabled = true
+port = 54323
+[auth]
+enabled = true
+site_url = "http://localhost:3000"
+additional_redirect_urls = ["http://localhost:3000/auth/callback"]
+enable_anonymous_sign_ins = true
+enable_manual_linking = true
+[auth.email]
+enable_signup = true
+enable_confirmations = true
+[auth.email.template.magic_link]
+subject = "Your invitation to the shore"
+content_path = "./supabase/templates/magic-link.html"
+[auth.email.template.confirmation]
+subject = "Your invitation to the shore"
+content_path = "./supabase/templates/magic-link.html"
+[auth.email.template.email_change]
+subject = "Keep this shore yours"
+content_path = "./supabase/templates/email-change.html"
