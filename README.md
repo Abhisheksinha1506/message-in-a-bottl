@@ -22,8 +22,8 @@ Create `.env.local` using `.env.example` as a reference. Do not commit it or pas
 | Variable                        | Scope       | Purpose                                                                                                                 |
 | ------------------------------- | ----------- | ----------------------------------------------------------------------------------------------------------------------- |
 | `NEXT_PUBLIC_SUPABASE_URL`      | Public      | Supabase project URL                                                                                                    |
-| `NEXT_PUBLIC_SUPABASE_ANON_KEY` | Public      | Supabase public anon key; RLS protects data                                                                             |
-| `SUPABASE_SERVICE_ROLE_KEY`     | Server only | Delivery RPC; never prefix with `NEXT_PUBLIC_`                                                                          |
+| `NEXT_PUBLIC_SUPABASE_ANON_KEY` | Public      | Supabase publishable key or legacy anon key; RLS protects data                                                          |
+| `SUPABASE_SERVICE_ROLE_KEY`     | Server only | Supabase secret key or legacy service-role key for delivery RPC; never prefix with `NEXT_PUBLIC_`                       |
 | `NEXT_PUBLIC_APP_URL`           | Public      | Exact application origin, e.g. `http://localhost:3000` or the production Vercel domain; also validates mutation origins |
 | `CRON_SECRET`                   | Server only | Random secret of at least 32 characters; Vercel sends it as a Bearer token                                              |
 | `NEXT_PUBLIC_DEMO_MODE`         | Local only  | `false` opts out of the sample preview                                                                                  |

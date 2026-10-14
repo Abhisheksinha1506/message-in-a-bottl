@@ -26,13 +26,26 @@ Anonymous sign-ins and manual identity linking were enabled after the user's con
 
 ## Callback URLs: saved and verified
 
-The Site URL is currently `http://localhost:3000`. The following callback URLs were saved after the user's confirmation and verified after reloading the dashboard:
+The production Site URL is `https://message-in-a-bottle-two.vercel.app`. The exact production callback was added through the Management API using the existing authenticated CLI session, and verified by a fresh configuration read. Local callbacks were preserved:
 
 - `http://localhost:3000/auth/callback`
 - `http://127.0.0.1:3000/auth/callback`
 - `http://127.0.0.1:3002/auth/callback`
+- `https://message-in-a-bottle-two.vercel.app/auth/callback`
 
-The production Site URL and production callback must be configured after the final website origin is available.
+## Vercel: connected and redeployed
+
+The live application is [message-in-a-bottle-two.vercel.app](https://message-in-a-bottle-two.vercel.app).
+
+All six environment variables are configured for Production. The existing publishable key is stored under `NEXT_PUBLIC_SUPABASE_ANON_KEY`; the existing backend secret key is stored under the server-only `SUPABASE_SERVICE_ROLE_KEY`. The backend key and randomly generated `CRON_SECRET` are non-revealable Vercel Secrets. No credentials were committed to GitHub or printed in chat. A fresh production deployment completed with status Ready after these variables were saved.
+
+## Delivery: Supabase scheduler
+
+The user approved Supabase Cron as an exception to the original Vercel Cron requirement so the website can stay on Vercel Hobby. The additive `supabase/setup/delivery-cron.sql` setup was applied. Job `message-in-a-bottle-delivery` is active with schedule `*/30 * * * *` and command `SELECT public.deliver_due_bottles(100);`. No delivery timestamps were forced forward and no existing application data was deleted.
+
+The protected Vercel cron route remains available for separately reviewed manual runs and returns HTTP 401 without authorization.
+
+The first automatic Supabase job run succeeded on 14 October 2026 at 17:00 UTC. Its execution status was inspected without reading bottle content.
 
 ## Email templates: SMTP required
 
@@ -42,4 +55,4 @@ Custom SMTP is required before the supplied custom templates can be saved or pub
 
 ## Remaining live verification
 
-The connected application should verify guest signup/profile creation and WebSocket inbox updates once its environment variables are set. Email login and guest upgrades require email delivery configuration. The database metadata and saved-setting checks do not substitute for these live flows.
+Live guest signup and the protected inbox, compose, keepsakes, and account settings pages were verified after deployment. The verification created one anonymous Auth account/profile through the normal application workflow, without submitting or deleting bottles. Real delayed message delivery, reply routing, and WebSocket arrivals still need a two-account test with actual 6–72-hour delays. Email login and guest upgrades require email delivery configuration; no SMTP provider has been added.
